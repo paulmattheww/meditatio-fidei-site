@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditatio Fidei — Your Catholic Faith Companion</title>
+    <meta name="description" content="Meditatio Fidei is a private, on-device Catholic AI companion for iOS. Explore Scripture, the Catechism, theology, prayer, and more — entirely offline.">
+    <style>
+        :root {
+            --gold: #CC9539;
+            --pale-gold: #F2D98D;
+            --deep-bg: #0A0512;
+            --deep-bg2: #12072E;
+            --text: #F5F0E3;
+            --text-muted: rgba(245, 240, 227, 0.65);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(204, 149, 57, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(180deg, var(--deep-bg) 0%, var(--deep-bg2) 50%, var(--deep-bg) 100%);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(204, 149, 57, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .logo-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 200;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, var(--pale-gold), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-style: italic;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Sections */
+        section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 32px;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        /* Feature Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 28px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--gold);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            color: var(--pale-gold);
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Privacy Banner */
+        .privacy-banner {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 700px;
+        }
+
+        .privacy-banner h3 {
+            color: var(--pale-gold);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .privacy-banner p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Sources */
+        .sources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .source-item {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .source-count {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 48px;
+            background: linear-gradient(135deg, var(--gold), #B8832E);
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 14px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(204, 149, 57, 0.3);
+        }
+
+        .cta p {
+            margin-top: 16px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Legal */
+        .legal {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .legal h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .legal h3 {
+            color: var(--pale-gold);
+            font-size: 1.1rem;
+            margin: 24px 0 8px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .legal p, .legal ul {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .legal ul {
+            padding-left: 20px;
+        }
+
+        .legal li {
+            margin-bottom: 6px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; letter-spacing: 4px; }
+            .tagline { font-size: 1rem; }
+            header { padding: 60px 16px 40px; }
+            .features { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span class="logo-icon" aria-hidden="true">&#x2720;</span>
+    <h1>MEDITATIO FIDEI</h1>
+    <p class="tagline">Your Catholic Faith Companion &mdash; Private, On-Device, Rooted in Tradition</p>
+</header>
+
+<section>
+    <h2>FEATURES</h2>
+    <div class="features">
+        <div class="feature-card">
+            <span class="feature-icon">&#x1F4D6;</span>
+            <h3>Catholic Apologetics</h3>
+            <p>Ask questions about Scripture, the Catechism, theology, and Church history. Every answer is grounded in 16,000+ source texts.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">&#x1F4FF;</span>
+            <h3>Guided Rosary</h3>
+            <p>Pray all four sets of mysteries with step-by-step guidance, Scripture meditations, and progress tracking.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">&#x1F64F;</span>
+            <h3>Prayer Journal</h3>
+            <p>Record reflections, intentions, and meditations. Track your prayer life with a personal, private journal.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">&#x2696;</span>
+            <h3>Confession Guide</h3>
+            <p>Prepare for the Sacrament of Reconciliation with a comprehensive examination of conscience across five frameworks.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">&#x1F54A;</span>
+            <h3>Discernment</h3>
+            <p>Work through conflicts and decisions with guided faith-based reflection in five structured phases.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">&#x1F4C5;</span>
+            <h3>Liturgical Calendar</h3>
+            <p>Daily feasts, readings, and liturgical seasons from the LitCal API. Never miss a holy day.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="privacy-banner">
+        <h3>&#x1F512; Completely Private</h3>
+        <p>Meditatio Fidei runs entirely on your iPhone. Your prayers, questions, and reflections never leave your device. The AI model runs locally using Apple's Metal GPU &mdash; no internet required after initial setup.</p>
+    </div>
+</section>
+
+<section>
+    <h2>CORPUS</h2>
+    <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px;">16,127 source text chunks from authoritative Catholic works</p>
+    <div class="sources">
+        <div class="source-item">Douay-Rheims Bible<span class="source-count">73 books &middot; 8,980 chunks</span></div>
+        <div class="source-item">Lives of the Saints<span class="source-count">Butler's, Baring-Gould, Pictorial &middot; 4,348 chunks</span></div>
+        <div class="source-item">Marian Apparitions<span class="source-count">Papal documents &amp; historical accounts &middot; 1,319 chunks</span></div>
+        <div class="source-item">Catechism of the Catholic Church<span class="source-count">2,865 paragraphs &middot; 573 chunks</span></div>
+        <div class="source-item">Lives of the Popes<span class="source-count">Liber Pontificalis &amp; encyclopedia &middot; 594 chunks</span></div>
+        <div class="source-item">Roman Martyrology<span class="source-count">1916 English edition &middot; 97 chunks</span></div>
+        <div class="source-item">Summa Theologica<span class="source-count">St. Thomas Aquinas &middot; 20 chunks</span></div>
+        <div class="source-item">Catholic Prayers<span class="source-count">Rosary, devotional, penitential &middot; 58 chunks</span></div>
+        <div class="source-item">Church Fathers<span class="source-count">Patristic texts (1st-5th c.) &middot; 22 chunks</span></div>
+        <div class="source-item">Moral Theology<span class="source-count">Sin classification &amp; Persona Humana &middot; 47 chunks</span></div>
+        <div class="source-item">Catholic Encyclopedia<span class="source-count">1913 edition (key articles) &middot; 24 chunks</span></div>
+        <div class="source-item">Catechisms<span class="source-count">Trent &amp; Baltimore &middot; 45 chunks</span></div>
+    </div>
+</section>
+
+<div class="cta">
+    <a href="#" class="cta-button">Coming Soon to the App Store</a>
+    <p>Available for iPhone and iPad &middot; iOS 17+</p>
+</div>
+
+<section class="legal" id="privacy">
+    <h2>PRIVACY POLICY</h2>
+
+    <p><strong>Effective Date:</strong> September 12, 2026</p>
+    <p><strong>Developer:</strong> SOVEREIGN ACTION LLC ("we," "us," "our")</p>
+
+    <h3>Summary</h3>
+    <p>Meditatio Fidei is designed with privacy as a core principle. Prayers, chats, confession notes, and journal entries are stored on your device. We do not operate user accounts. Limited network requests are used for the liturgical calendar, optional AI model download, App Store purchases, and (only if configured) privacy-respecting analytics.</p>
+
+    <h3>Data Collection</h3>
+    <p>Meditatio Fidei does <strong>not</strong> collect:</p>
+    <ul>
+        <li>Personal identification information (name, email, phone number)</li>
+        <li>Location data</li>
+        <li>Contact information</li>
+        <li>Browsing or search history</li>
+        <li>Content of prayers, journal entries, or conversations</li>
+        <li>Apple Identifier for Advertisers (IDFA) or any advertising identifiers</li>
+    </ul>
+
+    <h3>AI Model Provenance</h3>
+    <p>Meditatio Fidei uses an on-device AI language model (<strong>Qwen3-1.7B-4bit</strong>) for generating theological responses. The model is downloaded once from Hugging Face during initial setup and thereafter runs entirely on your device using Apple's Metal GPU framework. <strong>No queries, prompts, or AI-generated responses are ever transmitted off your device.</strong> The model does not learn from or retain your conversations between sessions.</p>
+
+    <h3>Corpus Data Provenance</h3>
+    <p>The app includes a bundled SQLite database of 16,000+ text chunks drawn exclusively from public domain and freely available Catholic sources, including:</p>
+    <ul>
+        <li>Douay-Rheims Bible (public domain)</li>
+        <li>Catechism of the Catholic Church (Vatican, freely distributed)</li>
+        <li>Butler's Lives of the Saints, Baring-Gould's Lives of the Saints, Pictorial Lives of the Saints (public domain)</li>
+        <li>1913 Catholic Encyclopedia (public domain)</li>
+        <li>Summa Theologica by St. Thomas Aquinas (public domain)</li>
+        <li>Roman Martyrology, 1916 English edition (public domain)</li>
+        <li>Catechism of the Council of Trent, Baltimore Catechism (public domain)</li>
+        <li>Selected Church Fathers and patristic texts (public domain)</li>
+        <li>Marian apparition accounts and papal documents (public domain / freely distributed)</li>
+        <li>Moral theology references and Catholic prayers (public domain)</li>
+    </ul>
+    <p>This corpus is stored locally and is never modified or transmitted.</p>
+
+    <h3>On-Device Processing</h3>
+    <p>All AI inference, text search, embedding generation, and data storage happen entirely on your iPhone or iPad. No queries, responses, or personal reflections are ever sent to external servers.</p>
+
+    <h3>Analytics</h3>
+    <p>Meditatio Fidei can use TelemetryDeck for privacy-respecting, aggregated usage analytics. TelemetryDeck does not collect personally identifiable information, IP addresses, or device fingerprints. <strong>Analytics are disabled unless a TelemetryDeck App ID is configured in a release build.</strong> When enabled, signals are used solely to understand which features are most useful. You can learn more at <a href="https://telemetrydeck.com/privacy" target="_blank" rel="noopener">telemetrydeck.com/privacy</a>.</p>
+
+    <h3>Crash Reporting</h3>
+    <p>The app includes a crash-reporting hook that can send anonymous technical reports (stack traces, device model, OS version) without conversation content, prayer journal entries, or screenshots. <strong>Crash reporting is not enabled in the current release</strong> (no DSN is configured).</p>
+
+    <h3>App Tracking Transparency</h3>
+    <p>Meditatio Fidei does <strong>not</strong> use the Apple Identifier for Advertisers (IDFA), does not participate in any ad networks, and does not track users across apps or websites. The app does not prompt for App Tracking Transparency permission because no tracking occurs.</p>
+
+    <h3>Third-Party Services</h3>
+    <ul>
+        <li><strong>Hugging Face</strong> (huggingface.co): Optional one-time download of the on-device AI model (~2.3 GB, Wi-Fi). Only standard HTTP requests are made; prompts and conversations are not uploaded.</li>
+        <li><strong>LitCal / readings APIs</strong>: Used to fetch liturgical calendar data and Mass reading references. The request includes a calendar date, not your identity.</li>
+        <li><strong>TelemetryDeck</strong>: Optional privacy-respecting analytics as described above (off unless configured).</li>
+        <li><strong>Apple StoreKit</strong>: Subscription purchases are handled by Apple. See <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</li>
+    </ul>
+
+    <h3>Data Storage &amp; Deletion</h3>
+    <p>All user data (conversations, prayer sessions, journal entries, confession notes, discernment sessions) is stored locally on your device using Apple's SwiftData framework. You can delete all local data at any time from the app's Settings screen. Uninstalling the app removes all stored data permanently.</p>
+
+    <h3>Children's Privacy (COPPA)</h3>
+    <p>Meditatio Fidei is <strong>not</strong> in the App Store Kids category. It does not knowingly collect personal information from children under 13. The confession examination of conscience includes mature religious/moral questions (including sexual morality). We recommend an age rating of 12+ and parental guidance for younger users.</p>
+
+    <h3>GDPR &amp; CCPA</h3>
+    <p>Because Meditatio Fidei does not collect, process, or store personal data on any server, users' rights under the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA) are inherently satisfied. There is no personal data to access, correct, delete, or port. If you have questions about your data rights, contact us at the address below.</p>
+
+    <h3>Changes to This Policy</h3>
+    <p>We may update this privacy policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the revised policy.</p>
+
+    <h3>Contact</h3>
+    <p>Questions about this privacy policy can be directed to: <a href="mailto:privacy@sovereignaction.com">privacy@sovereignaction.com</a></p>
+</section>
+
+<section class="legal" id="terms">
+    <h2>TERMS OF SERVICE</h2>
+
+    <p><strong>Effective Date:</strong> September 12, 2026</p>
+    <p><strong>Developer:</strong> SOVEREIGN ACTION LLC ("Company," "we," "us," "our")</p>
+
+    <h3>&sect;1. Acceptance of Terms</h3>
+    <p>By downloading, installing, or using Meditatio Fidei ("the App"), you ("User," "you") agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not download, install, or use the App.</p>
+
+    <h3>&sect;2. Description of Service</h3>
+    <p>Meditatio Fidei is a Catholic faith companion app that provides AI-powered theological responses, prayer tools, and educational content. The App uses an on-device large language model (Qwen3-1.7B-4bit) and a curated corpus of 16,000+ public domain Catholic source texts for retrieval-augmented generation (RAG). All processing occurs locally on your device.</p>
+
+    <h3>&sect;3. AI Content Disclaimer</h3>
+    <p><strong>AI-generated content may contain errors, inaccuracies, hallucinations, fabricated citations, misquotations, or theological errors.</strong> The AI model generates probabilistic text output based on patterns in its training data and the retrieved corpus. It does not possess theological understanding, doctrinal authority, or spiritual discernment. You acknowledge and agree that:</p>
+    <ul>
+        <li>AI responses may misattribute quotes to saints, popes, or Church documents;</li>
+        <li>AI responses may present historically inaccurate or doctrinally imprecise information as fact;</li>
+        <li>AI responses do not represent the official teaching of the Catholic Church;</li>
+        <li>You bear sole responsibility for evaluating and verifying any information provided by the App.</li>
+    </ul>
+
+    <h3>&sect;4. Not Professional Advice</h3>
+    <p>Meditatio Fidei is an educational and devotional tool. It is <strong>not</strong> a substitute for:</p>
+    <ul>
+        <li>The guidance of a priest, deacon, or spiritual director;</li>
+        <li>The Magisterium of the Catholic Church;</li>
+        <li>Licensed mental health professionals, therapists, or counselors;</li>
+        <li>Medical doctors or other healthcare providers.</li>
+    </ul>
+    <p>The App's Discernment and Confession Preparation features are aids for personal reflection only. They do not constitute sacramental confession, spiritual direction, or psychological counseling. <strong>If you are in crisis or experiencing a mental health emergency, please call the 988 Suicide &amp; Crisis Lifeline (call or text 988) or contact your local emergency services immediately.</strong></p>
+
+    <h3>&sect;5. Public Domain Corpus Disclaimer</h3>
+    <p>The App's corpus includes historical texts that reflect the understanding, language, and scholarly conventions of their era. In particular:</p>
+    <ul>
+        <li>The 1913 Catholic Encyclopedia predates the Second Vatican Council (1962&ndash;1965) and may not reflect current Church teaching on ecumenism, liturgy, religious liberty, or other topics addressed by the Council;</li>
+        <li>Hagiographic sources (Lives of the Saints) contain legendary, devotional, and unverified accounts that blend historical fact with pious tradition;</li>
+        <li>Older moral theology texts may use language or categories that differ from contemporary Catholic moral teaching;</li>
+        <li>All corpus texts are provided for educational and devotional purposes and should be read in their historical context.</li>
+    </ul>
+
+    <h3>&sect;6. Subscriptions &amp; Purchases</h3>
+    <p>Meditatio Fidei offers a free tier with limited daily AI chats and premium subscription plans for unlimited access. Subscriptions are managed through Apple's App Store. Payment, renewal, and cancellation are governed by Apple's terms. See <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdevstandard/" target="_blank" rel="noopener">Apple's Standard EULA</a> for additional details.</p>
+
+    <h3>&sect;7. Intellectual Property</h3>
+    <p>The Meditatio Fidei app, including its design, code, user interface, icons, and original content, is the property of SOVEREIGN ACTION LLC and is protected by copyright and other intellectual property laws. The corpus texts are drawn from public domain sources and freely available Vatican documents and remain in the public domain.</p>
+
+    <h3>&sect;8. Disclaimer of Warranties</h3>
+    <p>THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WITHOUT LIMITING THE FOREGOING, WE DO NOT WARRANT THAT:</p>
+    <ul>
+        <li>AI-generated responses will be accurate, complete, theologically correct, or free from error;</li>
+        <li>The corpus texts are free from transcription errors or omissions;</li>
+        <li>The App will be uninterrupted, secure, or error-free;</li>
+        <li>Any information obtained through the App will meet your requirements.</li>
+    </ul>
+
+    <h3>&sect;9. Limitation of Liability</h3>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL SOVEREIGN ACTION LLC, ITS OFFICERS, DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO DAMAGES FOR:</p>
+    <ul>
+        <li>Reliance on AI-generated content, citations, or theological guidance;</li>
+        <li>Spiritual, emotional, or psychological harm arising from use of the App;</li>
+        <li>Decisions related to sacramental preparation, confession, or discernment made based on the App's output;</li>
+        <li>Loss of data, revenue, or goodwill.</li>
+    </ul>
+    <p>OUR TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THESE TERMS OR YOUR USE OF THE APP SHALL NOT EXCEED THE AMOUNT YOU HAVE PAID TO US IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR FIFTY US DOLLARS ($50.00), WHICHEVER IS GREATER.</p>
+
+    <h3>&sect;10. Indemnification</h3>
+    <p>You agree to indemnify, defend, and hold harmless SOVEREIGN ACTION LLC and its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including reasonable attorneys' fees) arising from: (a) your use of the App; (b) your violation of these Terms; or (c) your reliance on AI-generated content.</p>
+
+    <h3>&sect;11. Dispute Resolution</h3>
+    <p><strong>Binding Arbitration:</strong> Any dispute arising out of or relating to these Terms or the App shall be resolved by binding arbitration administered by the American Arbitration Association (AAA) under its Consumer Arbitration Rules. The arbitration shall take place in the State of Georgia, United States. Judgment on the arbitration award may be entered in any court of competent jurisdiction.</p>
+    <p><strong>Class Action Waiver:</strong> YOU AND SOVEREIGN ACTION LLC AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS OR REPRESENTATIVE PROCEEDING.</p>
+    <p><strong>Small Claims Exception:</strong> Notwithstanding the foregoing, either party may bring an individual action in small claims court for disputes within that court's jurisdictional limits.</p>
+
+    <h3>&sect;12. Governing Law</h3>
+    <p>These Terms are governed by and construed in accordance with the laws of the State of Georgia, United States, without regard to its conflict of law provisions.</p>
+
+    <h3>&sect;13. Severability</h3>
+    <p>If any provision of these Terms is held to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect. The invalid provision shall be modified to the minimum extent necessary to make it valid and enforceable while preserving the original intent.</p>
+
+    <h3>&sect;14. Entire Agreement</h3>
+    <p>These Terms, together with the Privacy Policy and the End User License Agreement, constitute the entire agreement between you and SOVEREIGN ACTION LLC regarding the App and supersede all prior agreements.</p>
+
+    <h3>&sect;15. Contact</h3>
+    <p>Questions about these terms can be directed to: <a href="mailto:legal@sovereignaction.com">legal@sovereignaction.com</a></p>
+</section>
+
+<section class="legal" id="eula">
+    <h2>END USER LICENSE AGREEMENT</h2>
+
+    <p><strong>Effective Date:</strong> September 12, 2026</p>
+    <p><strong>Developer:</strong> SOVEREIGN ACTION LLC ("Licensor")</p>
+
+    <p>This End User License Agreement ("EULA") is a legal agreement between you ("User") and SOVEREIGN ACTION LLC governing your use of Meditatio Fidei ("the App"). By installing or using the App, you agree to be bound by this EULA.</p>
+
+    <h3>&sect;1. License Grant</h3>
+    <p>Subject to your compliance with this EULA, Licensor grants you a limited, non-exclusive, non-transferable, revocable license to download, install, and use the App on Apple-branded devices that you own or control, solely for your personal, non-commercial use.</p>
+
+    <h3>&sect;2. Scope Restrictions</h3>
+    <p>You shall not:</p>
+    <ul>
+        <li>Redistribute, sublicense, rent, lease, or lend the App or any part thereof;</li>
+        <li>Extract, copy, or redistribute the bundled corpus database or any portion of its contents for use outside the App;</li>
+        <li>Reverse engineer, decompile, disassemble, or attempt to derive the source code of the App, except to the extent expressly permitted by applicable law;</li>
+        <li>Modify, adapt, translate, or create derivative works based on the App;</li>
+        <li>Remove, alter, or obscure any copyright, trademark, or other proprietary notices;</li>
+        <li>Use the App to develop a competing product or service.</li>
+    </ul>
+
+    <h3>&sect;3. AI Content Ownership</h3>
+    <p>You retain ownership of the text you input into the App ("User Inputs"). AI-generated responses ("Outputs") are provided without any warranty of originality, accuracy, or fitness for any purpose. Licensor does not claim ownership of Outputs but makes no representations regarding your right to use Outputs for any specific purpose. Outputs may inadvertently reproduce copyrighted or trademarked material from the AI model's training data.</p>
+
+    <h3>&sect;4. Prohibited Uses</h3>
+    <p>You agree not to use the App to:</p>
+    <ul>
+        <li>Rely on AI-generated content as a substitute for consultation with a priest, spiritual director, or qualified clergy for sacramental preparation (including but not limited to confession, confirmation, marriage, or RCIA);</li>
+        <li>Present AI-generated responses as authoritative Catholic teaching, Magisterial documents, or official Church positions;</li>
+        <li>Use AI-generated content as a substitute for professional counseling, therapy, or medical treatment;</li>
+        <li>Generate content that is hateful, harassing, defamatory, or that promotes violence;</li>
+        <li>Attempt to circumvent usage limits, subscription enforcement, or other technical restrictions.</li>
+    </ul>
+
+    <h3>&sect;5. Termination</h3>
+    <p>This EULA is effective until terminated. Your rights under this EULA will terminate automatically without notice if you fail to comply with any of its terms. Upon termination, you must cease all use of the App and delete all copies. Sections 2, 3, 4, and 6 shall survive termination.</p>
+
+    <h3>&sect;6. Apple-Specific Terms</h3>
+    <p>This EULA is between you and SOVEREIGN ACTION LLC only, not with Apple Inc. ("Apple"). The following terms apply to the extent required by Apple's <a href="https://www.apple.com/legal/internet-services/itunes/dev/minterms/" target="_blank" rel="noopener">Minimum Terms for Developer's End User License Agreement</a>:</p>
+    <ul>
+        <li><strong>Acknowledgement:</strong> You acknowledge that this EULA is between you and Licensor only, and that Apple has no obligation to furnish any maintenance or support services with respect to the App.</li>
+        <li><strong>Product Claims:</strong> Licensor, not Apple, is responsible for addressing any claims relating to the App or your possession and use of the App, including but not limited to: (a) product liability claims; (b) any claim that the App fails to conform to any applicable legal or regulatory requirement; and (c) claims arising under consumer protection or similar legislation.</li>
+        <li><strong>Intellectual Property:</strong> In the event of any third-party claim that the App or your possession and use of the App infringes a third party's intellectual property rights, Licensor, not Apple, shall be solely responsible for the investigation, defense, settlement, and discharge of any such claim.</li>
+        <li><strong>Legal Compliance:</strong> You represent and warrant that (a) you are not located in a country that is subject to a U.S. Government embargo; and (b) you are not listed on any U.S. Government list of prohibited or restricted parties.</li>
+        <li><strong>Third-Party Beneficiary:</strong> Apple and its subsidiaries are third-party beneficiaries of this EULA and, upon your acceptance of this EULA, Apple will have the right (and will be deemed to have accepted the right) to enforce this EULA against you as a third-party beneficiary.</li>
+        <li><strong>Contact:</strong> Questions, complaints, or claims regarding the App should be directed to: <a href="mailto:legal@sovereignaction.com">legal@sovereignaction.com</a></li>
+    </ul>
+
+    <h3>&sect;7. General</h3>
+    <p>This EULA is governed by the laws of the State of Georgia, United States. If any provision is found unenforceable, the remaining provisions remain in effect. This EULA, together with the Terms of Service and Privacy Policy, constitutes the entire agreement regarding the App's license.</p>
+</section>
+
+<footer>
+    <p>&copy; 2026 SOVEREIGN ACTION LLC. All rights reserved.</p>
+    <p style="margin-top: 8px;">
+        <a href="privacy.html">Privacy Policy</a> &middot;
+        <a href="terms.html">Terms of Service</a> &middot;
+        <a href="eula.html">EULA</a> &middot;
+        <a href="support.html">Support</a>
+    </p>
+</footer>
+
+</body>
+</html>
