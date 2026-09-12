@@ -46,10 +46,11 @@
 
     <h2>Network requests</h2>
     <ul>
-        <li><strong>Liturgical calendar / readings:</strong> a calendar date is requested from public liturgical APIs. No account data is sent.</li>
+        <li><strong>Liturgical calendar / readings:</strong> public LitCal and readings APIs are queried with liturgical locale (<code>EN</code>), national calendar (<code>USA</code>), and calendar dates — not your name, email, or conversation content.</li>
         <li><strong>Hugging Face:</strong> optional one-time model download.</li>
         <li><strong>Apple StoreKit:</strong> purchases are processed by Apple. See Apple’s privacy policy.</li>
         <li><strong>TelemetryDeck:</strong> optional aggregated usage analytics, disabled unless an App ID is configured. No IP addresses or conversation content.</li>
+        <li><strong>Apple iCloud (optional):</strong> if iCloud is enabled, a few preference keys (prayer reminder time, onboarding flag) may sync via Apple’s key-value store. Chats, prayers, confession notes, and journals are not synced.</li>
         <li><strong>Crash reporting:</strong> not enabled in the current release.</li>
     </ul>
 
@@ -66,7 +67,7 @@
     <p>Premium is $3.99/month or $29.99/year, auto-renewing through Apple, with a free trial when offered. Manage or cancel in iOS Settings → Apple ID → Subscriptions. See <a href="support.html">Support</a>.</p>
 
     <h2>Contact</h2>
-    <p><a href="mailto:privacy@sovereignaction.com">privacy@sovereignaction.com</a></p>
+    <p><a href="mailto:paul.washburn@sovereign-action.com">paul.washburn@sovereign-action.com</a></p>
 </div>
 </body>
 </html>
